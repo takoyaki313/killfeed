@@ -35,6 +35,8 @@ function killPlayerCheck(log){
           ||log.line[4].indexOf('バイキング')!== -1
           ||log.line[4].indexOf('マーシナリー')!== -1
           ||log.line[4].indexOf('タンク')!== -1
+          ||log.line[4].indexOf('アイスドトームリス')!== -1
+          ||log.line[4].indexOf('邀撃')!== -1
         ){//オブジェクトを破壊した場合
           //なにもしない
           }
@@ -362,7 +364,7 @@ $(function() {
   });
 
   addOverlayListener("ChangeZone",(Area) => {
-    //console.log(Area);
+    console.log(Area);
     Area_Name = Area.zoneName;
     if(Area.zoneName == 'Hidden Gorge'){
       Set_Battle_Time = 900;
@@ -372,7 +374,7 @@ $(function() {
     }
     else if(Area.zoneName.indexOf('Bourderland Ruins')!== -1
     ||Area.zoneName.indexOf('Seal Rock')!== -1
-    ||Area.zoneName.indexOf('Fields Of Glory')!== -1
+    ||Area.zoneName.indexOf('Fields of Glory')!== -1
     ||Area.zoneName.indexOf('Onsal Hakair')!== -1){
       Set_Battle_Time = 1200;
       Battle_Current_Time = 0;
@@ -397,6 +399,7 @@ $(function() {
       tensyon_max = 0;
       array_reset();
     }
+    console.log(log_Listen_Mode);
   });
 
   addOverlayListener("LogLine", (log) => {
