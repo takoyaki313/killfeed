@@ -108,7 +108,7 @@ html {
   width: 100px;
 }
 .header .header-line {
-  width: 100%;
+  width: -webkit-fill-available;
   margin:  3px;
 }
 [class^="button-"], [class*=" button-"] {
