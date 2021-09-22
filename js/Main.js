@@ -295,7 +295,19 @@ function array_reset(){
   //Overlay_Main_Data = [];
   console.log('dataclear');
 }
-
+function fl_alliance(){
+  for(var i = 0; i < 24 ; i++){
+    if(Aliance_Member[i][1] == 2){
+      Aliance_Member[i][1] = 1;
+    }
+    else if(Aliance_Member[i][1] == 4){
+      Aliance_Member[i][1] = 3;
+    }
+    else if(Aliance_Member[i][1] == 6){
+      Aliance_Member[i][1] = 5;
+    }
+  }
+}
 $(function() {
   "use strict";
   let tensyon_max = 0;
@@ -320,6 +332,9 @@ $(function() {
             }
           }
           Aliance_Member[z] =  [p.party[z].name,aliance];
+        }
+        if(log_Listen_Mode == 2){
+          fl_alliance();
         }
         alliance_data_marge();
       }
