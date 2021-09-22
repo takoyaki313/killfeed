@@ -364,9 +364,9 @@ $(function() {
   addOverlayListener("ChangeZone",(Area) => {
     //console.log(Area);
     Area_Name = Area.zoneName;
-    if(Area.zoneName == 'Hidden Gorge'
-  ||Area.zoneName == 'Middle La Noscea'){
+    if(Area.zoneName == 'Hidden Gorge'){
       Set_Battle_Time = 900;
+      Battle_Current_Time = 0;
       log_Listen_Mode = 1;
       headerUpdate();
     }
@@ -375,12 +375,19 @@ $(function() {
     ||Area.zoneName.indexOf('Fields Of Glory')!== -1
     ||Area.zoneName.indexOf('Onsal Hakair')!== -1){
       Set_Battle_Time = 1200;
+      Battle_Current_Time = 0;
       log_Listen_Mode = 2;
       headerUpdate();
     }
     else if (Area.zoneID == 250){
       Set_Battle_Time = Battle_Current_Time;
       log_Listen_Mode = 3;
+      headerUpdate();
+    }
+    else if (Area.zoneName == 'Middle La Noscea') {
+      Set_Battle_Time = 5999;
+      log_Listen_Mode = 1;
+      battle_counter();
       headerUpdate();
     }
     else{
@@ -444,7 +451,7 @@ function battle_counter(){
   }
   else{
     console.log('Start Timer');
-    Battle_start = new Boolean(true);
+    Battle_start = true;
     Battle_Start_Time = new Date;
     Timer_interval = setInterval(countUp,1000);
   }
@@ -566,6 +573,9 @@ function time_change(){
   }
   else {
     var time = Battle_Current_Time;
+  }
+  if(time < 0){
+    time = 0;
   }
   division_time[0] = Math.trunc(time / 60);
   const temp = division_time[0] * 60;
