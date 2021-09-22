@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+JP:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/icon.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ngld.github.io/OverlayPlugin/assets/shared/common.min.js"></script>
+    <script type="text/javascript" src="js/Main.js"></script>
+    <script type="text/javascript" src="js/Action.js"></script>
+    <script type="text/javascript" src="js/Server.js"></script>
+</head>
+
+<body>
+<ol id="source">
+    <li>
+      <div class='main-data'>
+        <div class='left-space'>
+          <span class='left-jobicon'></span>
+          <span class='left-name'></span>
+        </div>
+        <span class='arrow'></span>
+        <div class='right-space'>
+          <span class='right-jobicon'></span>
+          <span class='right-name'></span>
+        </div>
+      </div>
+    </li>
+</ol>
+<div class="header" id="header_space">
+  <div class ="header-top">
+    <span class='mypage'>
+      <label for='button-1' class='icon-app_fc'></label>
+      <button class='button-1' id='button-1'></button>
+    </span>
+    <span class='areaname'></span>
+    <span class='clockicon'>
+      <!--
+      <span class='icon-ScheduleTime'></span>
+      -->
+      <span class='time' id='time_space'>
+        <span class='time-min'></span>
+        <span class='time-coron'></span>
+        <span class='time-sec'></span>
+      </span>
+    </span>
+    <span class='setting'>
+      <label for='button-4' class='icon-app_drawer_setting'></label>
+      <button class='button-1' id='button-1'></button>
+    </span>
+  </div>
+  <hr class='header-line' size='4px' noshade>
+  <div class='header-under'>
+    <span class='header-data' id='header-data'>
+      <span class='what-header-data'></span>
+      <span class='all-kd'>
+        <span class='kill-num'></span>
+        <span class='death-num'></span>
+      </span>
+      <span class='all-kd-percent'></span>
+    </span>
+  </div>
+</div>
+<ol id="overlay">
+    <li></li>
+</ol>
+</body>
+</html>

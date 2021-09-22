@@ -1,0 +1,231 @@
+<style >
+html {
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    height: 100%;
+}
+#source {
+  display: none;
+}
+
+#overlay {
+    font-family: 'Noto Serif JP', serif;
+    color: #ded7be;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.header {
+  color: #ded7be;
+  background-color: rgba(0,0,0,0.8);
+  border-radius: 0px;
+  display: flex;
+  font-size: 24px;
+  padding: 3px;
+  flex-direction: column;
+  font-family: 'Bebas Neue', cursive;
+}
+.header .header-top {
+  display: flex;
+  width: -webkit-fill-available;
+}
+.header .header-under {
+  display: flex;
+  width: -webkit-fill-available;
+}
+.header .header-top .mypage{
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header .header-top .setting{
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header .header-under .all-kd {
+  width: -webkit-fill-available;
+  overflow: hidden;
+  white-space: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+.header .header-under .all-kd .kill-num,.header .header-under .all-kd .death-num{
+  padding-left: 0.5rem;
+}
+.header .header-under .all-kd-percent {
+  width: 100px;
+  align-items: center;
+  justify-content: center;
+}
+.header .header-top .areaname {
+  width: calc(100% - 140px);
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 18px;
+  align-items: center;
+}
+.header .header-top .clockicon {
+}
+.header .header-top .time {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 5px;
+  width: 60px;
+  font-size: 20px;
+}
+.header .header-top .time .time-min {
+  width: 25px;
+
+  text-align: right;
+}
+.header .header-top .time .time-coron {
+  width: 10px;
+
+  text-align: center;
+}
+.header .header-top .time .time-sec {
+  width: 25px;
+
+  text-align: left;
+}
+.header .header-under .header-data {
+  display: flex;
+  font-size: 18px;
+  width: -webkit-fill-available;
+}
+.header .header-under .header-kd {
+  display: flex;
+}
+.header .header-under .header-data .what-header-data {
+  padding-left: 3px;
+  padding-right: 3px;
+  width: 100px;
+}
+.header .header-line {
+  width: 100%;
+  margin:  3px;
+}
+[class^="button-"], [class*=" button-"] {
+  display: none;
+}
+ol {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+li {
+  display: flex;
+  justify-content: flex-end;
+}
+li .main-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  background-color: rgba(0,0,0,0.8);
+  width: fit-content;
+  padding: 0.2rem;
+}
+li .left-space,li .right-space{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+li .left-jobicon,li .right-jobicon{
+  font-size: 28px;
+}
+li .arrow {
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+  font-weight: bolder;
+  font-size: 1rem;
+}
+li .arrow-death {
+  color: orangered;
+}
+li .arrow-kill {
+  color: skyblue;
+}
+li .arrow-other {
+  color: gray;
+}
+/*
+
+li .aliance0{
+  color: gray;
+}
+li .aliance1{
+  color: #0D7094;
+}
+li .aliance2{
+  color: #9333AC;
+}
+li .aliance3{
+  color: #00BC69;
+}
+li .aliance4{
+  color: #FCDB4C;
+}
+li .aliance5{
+  color: #FF4B18;
+}
+li .aliance6{
+  color: #FF9728;
+}
+li .aliance10{
+  color: #9333AC;
+}
+li .me {
+  color: rgba(93,81,37,0.7);
+}*/
+li .aliance0{
+  color: gray;
+}
+li .aliance1{
+  color: #25F5F4;
+}
+li .aliance2{
+  color: #72A873;
+}
+li .aliance3{
+  color: #A8451E;
+}
+li .aliance4{
+  color: #F5C9B8;
+}
+li .aliance5{
+  color: #A81489;
+}
+li .aliance6{
+  color: #F5B8E8;
+}
+li .aliance10{
+  color: #25F526;
+}
+li .me {
+  color: #F5D94E;
+}
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  95% {
+    opacity:  50%;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.fadeout {
+  opacity: 1;
+  animation-name: fadeout;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+</style >

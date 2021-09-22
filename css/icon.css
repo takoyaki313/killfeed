@@ -1,0 +1,120 @@
+@font-face {
+  font-family: 'iconset';
+  src:  url('fonts/iconset.eot');
+  src:  url('fonts/iconset.eot') format('embedded-opentype'),
+    url('fonts/iconset.ttf') format('truetype'),
+    url('fonts/iconset.woff') format('woff'),
+    url('fonts/iconset.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'iconset' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-app_block:before {
+  content: "\e900";
+}
+.icon-app_drawer_setting:before {
+  content: "\e901";
+}
+.icon-app_fc:before {
+  content: "\e902";
+}
+.icon-app_world_wanderer:before {
+  content: "\e903";
+}
+.icon-ast:before {
+  content: "\e904";
+}
+.icon-bdm:before {
+  content: "\e905";
+}
+.icon-blm:before {
+  content: "\e906";
+}
+.icon-brd:before {
+  content: "\e907";
+}
+.icon-che:before {
+  content: "\e908";
+}
+.icon-dnc:before {
+  content: "\e909";
+}
+.icon-drg:before {
+  content: "\e90a";
+}
+.icon-drk:before {
+  content: "\e90b";
+}
+.icon-gnb:before {
+  content: "\e90c";
+}
+.icon-jas:before {
+  content: "\e90d";
+}
+.icon-mch:before {
+  content: "\e90e";
+}
+.icon-mnk:before {
+  content: "\e90f";
+}
+.icon-NaviArrowLeft:before {
+  content: "\e910";
+}
+.icon-NaviArrowRight:before {
+  content: "\e911";
+}
+.icon-NaviUp:before {
+  content: "\e912";
+}
+.icon-nin:before {
+  content: "\e913";
+}
+.icon-opp:before {
+  content: "\e914";
+}
+.icon-pld:before {
+  content: "\e915";
+}
+.icon-rdm:before {
+  content: "\e916";
+}
+.icon-sam:before {
+  content: "\e917";
+}
+.icon-sch:before {
+  content: "\e918";
+}
+.icon-ScheduleTime:before {
+  content: "\e919";
+}
+.icon-smn:before {
+  content: "\e91a";
+}
+.icon-trn:before {
+  content: "\e91b";
+}
+.icon-ViewMove:before {
+  content: "\e91c";
+}
+.icon-war:before {
+  content: "\e91d";
+}
+.icon-whm:before {
+  content: "\e91e";
+}
