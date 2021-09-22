@@ -463,7 +463,8 @@ function countUp(){
     overlayUpdate();
   }
   if(Battle_Current_Time >= Set_Battle_Time + Disappearance){
-    console.log('Stop Timer');
+    console.log('Stop Timer + Overlay Data reset');
+    Overlay_Main_Data = [];
     clearInterval(Timer_interval);
   }
 }
