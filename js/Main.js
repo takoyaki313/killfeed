@@ -588,7 +588,7 @@ function time_change(){
 
 function overlayUpdate(){
   //headerUpdate();
-  var maxrow = 7;
+  var maxrow = 4;
   var disprow = maxrow ;
   var template = $('#source li');
   var container = $('#overlay').clone();
