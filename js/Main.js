@@ -129,13 +129,13 @@ function deathPlayerCheck(log){
     }//logline length6
 }
 function dammy_Data(){
-  Overlay_Main_Data[0]=['Justice Suzuki','Server',1,'jas','skill','Nathaniel Tamwood','Server',0,'sch','skill',40];
-  Overlay_Main_Data[1]=['Oppresor Tanaka','Server',10,'opp','skill','Maxsizeno Namenoohito','Server',0,'sam','skill',42];
-  Overlay_Main_Data[2]=['Chaiser Satou','Server',2,'che','skill','Raphael Tachibana','Server',0,'brd','skill',46];
-  Overlay_Main_Data[3]=['Daniel Tepesh','Server',6,'whm','skill','Carl Tanner','Server',0,'nin','skill',60];
-  Overlay_Main_Data[4]=['Michael Twining','Server',0,'pld','skill','Ansel Tod','Server',4,'gnb','skill',60];
-  Overlay_Main_Data[5]=['Samuel Takano','Server',3,'war','skill','Angel Twist','Server',0,'nin','skill',61];
-  Overlay_Main_Data[6]=['Gabriel Tepes','Server',0,'drk','skill','Carmel Tae-yeon','Server',5,'nin','skill',63];
+  Overlay_Main_Data[0]=['Justice Suzuki','Server',1,'jas','skill','Nathaniel Tamwood','Server',0,'sch','skill',0];
+  Overlay_Main_Data[1]=['Oppresor Tanaka','Server',10,'opp','skill','Maxsizeno Namenoohito','Server',0,'sam','skill',2];
+  Overlay_Main_Data[2]=['Chaiser Satou','Server',2,'che','skill','Raphael Tachibana','Server',0,'brd','skill',4];
+  Overlay_Main_Data[3]=['Daniel Tepesh','Server',6,'whm','skill','Carl Tanner','Server',0,'nin','skill',6];
+  Overlay_Main_Data[4]=['Michael Twining','Server',0,'pld','skill','Ansel Tod','Server',4,'gnb','skill',6];
+  Overlay_Main_Data[5]=['Samuel Takano','Server',3,'war','skill','Angel Twist','Server',0,'nin','skill',10];
+  Overlay_Main_Data[6]=['Gabriel Tepes','Server',0,'drk','skill','Carmel Tae-yeon','Server',5,'nin','skill',15];
 }
 
 function what_change_job(hp,name,skill){
@@ -322,6 +322,7 @@ $(function() {
   });
 
   addOverlayListener('PartyChanged', (p) => {
+    console.log(p);
     if(p.party.length > 4){//パーティメンバーを関数に入れる
       Party_Member = [];
       if(p.party.length == 24){
@@ -380,7 +381,7 @@ $(function() {
       Battle_Current_Time = 0;
       log_Listen_Mode = 2;
       headerUpdate();
-    }
+    }/*ここは消すべき*/
     else if (Area.zoneID == 250){
       Set_Battle_Time = Battle_Current_Time;
       log_Listen_Mode = 3;
@@ -642,6 +643,5 @@ function overlayUpdate(){
         //console.log('20s Over');
       }
     }
-
   $('#overlay').replaceWith(container);
 }
