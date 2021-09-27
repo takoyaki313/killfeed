@@ -12,17 +12,26 @@ var Aliance_Member = [];
 var All_Member_Jobs = [];
 var Overlay_Main_Data = [];
 var Datacenter = 'none';
-var What_Display = 'any';
 var Log_Listen_Force_On = false;
 var Set_Battle_Time = 0;
 var Timer_interval;
 var Area_Name = '';
+var Area_Change_num = 0;
+//local
+var Local_Killrog = '';
+var Local_Killposition = 'right';
+var Local_Header = '';
+var Local_PvEHeader = '';
+var What_Display = 'any';
+var Local_Maxrow = '';
+var Local_send_data = 'false';
+var Local_Animation = '';
 var Disappearance = 30;
+var Local_FL_offset = '';
+//local
+var bc_time;
+var bc_kill;
 
-
-function All_Member_Jobs_out(){
-  return All_Member_Jobs;
-}
 function killPlayerCheck(log){
   if(log.line.length == 6){
     //console.warn(log);
@@ -129,140 +138,20 @@ function deathPlayerCheck(log){
     }//logline length6
 }
 function dammy_Data(){
-  Overlay_Main_Data[0]=['Justice Suzuki','Server',1,'jas','skill','Nathaniel Tamwood','Server',0,'sch','skill',0];
-  Overlay_Main_Data[1]=['Oppresor Tanaka','Server',10,'opp','skill','Maxsizeno Namenoohito','Server',0,'sam','skill',2];
-  Overlay_Main_Data[2]=['Chaiser Satou','Server',2,'che','skill','Raphael Tachibana','Server',0,'brd','skill',4];
-  Overlay_Main_Data[3]=['Daniel Tepesh','Server',6,'whm','skill','Carl Tanner','Server',0,'nin','skill',6];
-  Overlay_Main_Data[4]=['Michael Twining','Server',0,'pld','skill','Ansel Tod','Server',4,'gnb','skill',6];
-  Overlay_Main_Data[5]=['Samuel Takano','Server',3,'war','skill','Angel Twist','Server',0,'nin','skill',10];
-  Overlay_Main_Data[6]=['Gabriel Tepes','Server',0,'drk','skill','Carmel Tae-yeon','Server',5,'nin','skill',15];
+  //                          0            1      2   3    4         5                    6    7  8      9     10  11
+  Overlay_Main_Data[0]=['Justice Suzuki','Server',1,'jas','skill','Nathaniel Tamwood','Server',0,'sch','skill',0,-1];
+  Overlay_Main_Data[1]=['Oppresor Tanaka','Server',10,'opp','skill','Maxsizeno Namenoohito','Server',0,'sam','skill',0,-1];
+  Overlay_Main_Data[2]=['Chaiser Satou','Server',2,'che','skill','Raphael Tachibana','Server',0,'brd','skill',0,-1];
+  Overlay_Main_Data[3]=['Daniel Tepesh','Server',6,'whm','skill','Carl Tanner','Server',0,'nin','skill',0,-1];
+  Overlay_Main_Data[4]=['Michael Twining','Server',0,'pld','skill','Ansel Tod','Server',4,'gnb','skill',0,-1];
+  Overlay_Main_Data[5]=['Samuel Takano','Server',3,'war','skill','Angel Twist','Server',0,'nin','skill',0,-1];
+  Overlay_Main_Data[6]=['Gabriel Tepes','Server',0,'drk','skill','Carmel Tae-yeon','Server',5,'nin','skill',0,-1];
+  Overlay_Main_Data[7]=['Michael Twining','Server',0,'pld','skill','Ansel Tod','Server',4,'gnb','skill',0,-1];
+  Overlay_Main_Data[8]=[MyCharactor_Name,'Server',1,'blm','skill','Angel Twist','Server',0,'nin','skill',0,-1];
+  Overlay_Main_Data[9]=['Gabriel Tepes','Server',0,'drk','skill','Carmel Tae-yeon','Server',5,'nin','skill',0,-1];
 }
 
-function what_change_job(hp,name,skill){
-  //console.log('B');
-    //All_Member_Jobs[k] = [name,aliance,hp,jobs,skill];
-  if(All_Member_Jobs.length == 0){//データなしの場合
-    return 1;
-  }
-  else{
-    //console.log('A');
-    for(let j = 0 ; j < All_Member_Jobs.length ; j++){
-      if(All_Member_Jobs[j][0] == name){
-        //console.log('同一の名前：' + name);
-        //同一の名前が見つかったとき
-        if(All_Member_Jobs[j][2] == hp){//最大HPが同じとき
-          if(skill == '軍用ポーション'||skill == '疾走'||skill.indexOf('Mount') !== -1){
-            All_Member_Jobs[j] == [All_Member_Jobs[j][0],All_Member_Jobs[j][1],All_Member_Jobs[j][2],All_Member_Jobs[j][3],skill];
-          }
-          //console.log('最大HPが同一' + hp + '＝' +All_Member_Jobs[j][2]);
-          if(All_Member_Jobs[j][3] == 'tnk'
-          ||All_Member_Jobs[j][3] == 'hea'
-          ||All_Member_Jobs[j][3] == 'mel'
-          ||All_Member_Jobs[j][3] == 'rng'
-          ||All_Member_Jobs[j][3] == 'cas'){
-            return 1;
-          }
-          else{
-            return 0;
-          }
-        }
-        else{//最大HPが違うとき
-          return 1;
-        }
-      }
-    }//For終了
-    return 1;//同一の名前が見つからなかったとき
-  }
-  console.warn('Error: what change job???');
-  return 0;
-}
 
-function All_Member_Jobs_add(name,hp,jobs,skill){
-  if(All_Member_Jobs.length == 0){
-    All_Member_Jobs[0]=[name,0,hp,jobs,skill];
-  }
-  else{
-    for(let k = 0 ; k < All_Member_Jobs.length ; k++){
-      if(All_Member_Jobs[k][0] == name){
-        All_Member_Jobs[k] = [All_Member_Jobs[k][0],All_Member_Jobs[k][1],hp,jobs,skill];
-        k = 200;//ループを終わらせる
-      }
-      else if (k == All_Member_Jobs.length - 1){
-        const add_point = All_Member_Jobs.length;
-        All_Member_Jobs[add_point] = [name,0,hp,jobs,skill];
-        k = 200;//ループを終わらせる
-      }
-    }
-  }
-  console.log('データ更新 : ' + name +'が' + jobs +':'+ hp + '/' +skill);
-  console.log(All_Member_Jobs);
-}
-
-function job_Detect(log) {
-  const name = log[3];
-  if(name.indexOf('ファルコン') == -1 && name.indexOf('レイヴン') == -1 && name.indexOf('マーシナリー') == -1){//オブジェクトのデータを除外
-    let maxHP = log[35];
-    maxHP = Number(maxHP);
-    const skill = log[5];
-    //最大HPチェック
-    //console.log(maxHP);
-    if(maxHP == 20000){//Tankのとき
-      if(what_change_job(maxHP,name,skill) == 1){
-        let job = tank_Action(skill);
-        console.log(job);
-        All_Member_Jobs_add(name,maxHP,job,skill);
-      }
-    }
-    else if (maxHP == 15000) {//キャスのとき
-      if(what_change_job(maxHP,name,skill) == 1){
-        let job = caster_Action(skill);
-        All_Member_Jobs_add(name,maxHP,job,skill);
-      }
-    }
-    else if (maxHP == 16000){//レンジのとき
-      if(what_change_job(maxHP,name,skill) == 1){
-        let job = ranged_Action(skill);
-        console.log(job);
-        All_Member_Jobs_add(name,maxHP,job,skill);
-      }
-    }
-    else if (maxHP == 17500){//ヒラもしくは近接のとき
-      if(what_change_job(maxHP,name,skill) == 1){
-        let job = healer_Action(skill);
-        if(job == 'hea'){
-          job = mellee_Action(skill);
-        }
-        console.log(job);
-        All_Member_Jobs_add(name,maxHP,job,skill);
-      }
-    }
-    else if (maxHP == 50000){//チェイサーのとき
-      if(what_change_job(maxHP,name,skill) == 1){
-        let job = 'che';
-        console.log(job);
-        All_Member_Jobs_add(name,maxHP,job,skill);
-      }
-    }
-    else if (maxHP == 75000){//ジャスのとき
-      if(what_change_job(maxHP,name,skill) == 1){
-        let job = 'jas';
-        console.log(job);
-        All_Member_Jobs_add(name,maxHP,job,skill);
-      }
-    }
-    else if (maxHP == 100000){//オプの時
-      if(what_change_job(maxHP,name,skill) == 1){
-        let job = 'opp';
-        console.log(job);
-        All_Member_Jobs_add(name,maxHP,job,skill);
-      }
-    }
-    else {
-      console.warn('Not Job Detected');
-      console.warn(log);
-    }
-  }
-}//job_Detect end
 //All_Member_Jobs[0]=[name,aliance,hp,jobs,action]
 function alliance_data_marge(){
   if(All_Member_Jobs.length == 0){//データが存在しない場合
@@ -310,8 +199,30 @@ function fl_alliance(){
     }
   }
 }
+
+
 $(function() {
   "use strict";
+
+  if(localStorage.getItem('killfeed-version') === null){
+    local_create();
+    console.log('初回起動');
+  }
+  else{
+    if(localStorage.getItem('killfeed-version') == 'kill-feed-core 1.02'){
+      console.log('localは最新');
+    }
+    else{
+      local_create();
+      console.log('localUpdate');
+    }
+  }
+  local_data_reflesh();
+  if(Local_send_data == 'true'){
+    bc_time = new BroadcastChannel('time_data');
+    bc_kill = new BroadcastChannel('kill_data');
+  }
+
   let tensyon_max = 0;
   let log_Listen_Mode = 0;
   Battle_start = false;
@@ -369,6 +280,7 @@ $(function() {
     Area_Name = Area.zoneName;
     if(Area.zoneName == 'Hidden Gorge'){
       Set_Battle_Time = 900;
+      Area_Change_num = 0;
       Battle_Current_Time = 0;
       log_Listen_Mode = 1;
       headerUpdate();
@@ -379,9 +291,10 @@ $(function() {
     ||Area.zoneName.indexOf('Onsal Hakair')!== -1){
       Set_Battle_Time = 1200;
       Battle_Current_Time = 0;
+      Area_Change_num = 0;
       log_Listen_Mode = 2;
       headerUpdate();
-    }/*ここは消すべき*/
+    }/*ここは消すべき*//*
     else if (Area.zoneID == 250){
       Set_Battle_Time = Battle_Current_Time;
       log_Listen_Mode = 3;
@@ -390,17 +303,19 @@ $(function() {
     else if (Area.zoneName == 'Middle La Noscea') {
       Set_Battle_Time = 5999;
       log_Listen_Mode = 1;
+      Area_Change_num = 0;
       battle_counter();
       headerUpdate();
-    }
+    }*/
     else{
       Set_Battle_Time = Battle_Current_Time;
       headerUpdate();
+      Area_Change_num = 1;
       log_Listen_Mode = 0;
       tensyon_max = 0;
       array_reset();
     }
-    console.log(log_Listen_Mode);
+    console.log('Log listen Mode = ' + log_Listen_Mode);
   });
 
   addOverlayListener("LogLine", (log) => {
@@ -425,7 +340,7 @@ $(function() {
         if(log.line[4].indexOf('フロントライン') !== -1 && log.line[4].indexOf('として参加しました') !== -1){
           $(document).ready(function(){setTimeout(function(){
             battle_counter();
-          }, 45000);
+          }, Local_FL_offset);
           });
         }
       }
@@ -447,38 +362,6 @@ $(function() {
   startOverlayEvents();
   headerUpdate();
 });
-function battle_counter(){
-  console.log(Battle_start);
-  if(Battle_start){
-    console.log('already start');
-    //既にスタートしているならなにもしない
-  }
-  else{
-    console.log('Start Timer');
-    Battle_start = true;
-    Battle_Start_Time = new Date;
-    Timer_interval = setInterval(countUp,1000);
-  }
-}
-function countUp(){
-  let nowtime = new Date;
-  //Battle_Start_Time
-  let current_time_ms = nowtime.getTime() - Battle_Start_Time.getTime();
-  Battle_Current_Time = Math.floor(current_time_ms/1000);
-  //console.log(Battle_Current_Time);
-  if(Battle_Current_Time <= Set_Battle_Time){
-    headerUpdate();
-    overlayUpdate();
-  }
-  else{
-    overlayUpdate();
-  }
-  if(Battle_Current_Time >= Set_Battle_Time + Disappearance){
-    console.log('Stop Timer + Overlay Data reset');
-    Overlay_Main_Data = [];
-    clearInterval(Timer_interval);
-  }
-}
 
 function if_kill_or_death(ally_name,ally_server,enemy_name,enemy_server,which_corpse){//味方,敵,キルされたかキルしたか
   if (What_Display = 'any'){
@@ -490,17 +373,26 @@ function if_kill_or_death(ally_name,ally_server,enemy_name,enemy_server,which_co
       Battle_KD[1]++;
       maindata_marge(enemy_name,enemy_server,ally_name,ally_server,0);
     }
+    if(Local_send_data == 'true'){
+      bc_kill.postMessage(Overlay_Main_Data);
+    }
     overlayUpdate();
   }
   else if (What_Display = 'Kill'){
     if(which_corpse == 'kill'){
       maindata_marge(ally_name,ally_server,enemy_name,enemy_server,1);
+      if(Local_send_data == 'true'){
+        bc_kill.postMessage(Overlay_Main_Data);
+      }
       overlayUpdate();
     }
   }
   else if (What_Display = 'death'){
     if(which_corpse == 'death'){
       maindata_marge(enemy_name,enemy_server,ally_name,ally_server,0);
+      if(Local_send_data == 'true'){
+        bc_kill.postMessage(Overlay_Main_Data);
+      }
       overlayUpdate();
     }
   }
@@ -533,6 +425,20 @@ function maindata_marge(left_name,left_server,right_name,right_server,how){
 function headerUpdate(){
   var header = $(header_space);
   //header top start
+  console.log(Area_Change_num);
+  console.log(Local_PvEHeader);
+  if(Area_Change_num == 0 ){
+    header.css('display','flex');
+  }
+  else if (Local_Header == 'false') {
+    header.css('display','none');
+  }
+  else if (Area_Change_num == 1 && Local_PvEHeader == 'false') {
+    header.css('display','none');
+  }
+  else if (Local_Header =='true') {
+    header.css('display','flex');
+  }
   header.find('.areaname').text(Area_Name);
   let time = time_change();
   header.find('.time-min').text(time[0]);
@@ -550,98 +456,4 @@ function headerUpdate(){
   header.find('.all-kd-percent').text(' K/D : ' + kd_rate.toFixed(2));
   //header under end
   //console.log('headerUpdate');
-}
-function min_data(){
-  //                  0           1       2     3     4     5           6           7   8     9    10
-  //var push_data = [left_name,left_server,0,'hmm','none',right_name,right_server,0,'hmm','none',Battle_Current_Time,how];
-  var data = [0,0];
-  for(let p = Overlay_Main_Data.length - 1 ; p >= 0 ; p--){
-    if(Overlay_Main_Data[p][10] + 60 > Battle_Current_Time){
-      if(Overlay_Main_Data[p][11] == 1){
-        data[0]++;
-      }
-      else if (Overlay_Main_Data[p][11] == 0) {
-        data[1]++;
-      }
-    }
-    else{
-      return data;
-    }
-  }
-  return data;
-}
-function time_change(){
-  var division_time = [0,0];
-  if(2 == 2){
-    var time = Set_Battle_Time - Battle_Current_Time;
-  }
-  else {
-    var time = Battle_Current_Time;
-  }
-  if(time < 0){
-    time = 0;
-  }
-  division_time[0] = Math.trunc(time / 60);
-  const temp = division_time[0] * 60;
-  division_time[1] = time - temp;
-  if (division_time[1] < 10) {
-    division_time[1] = "0" + division_time[1];
-  }
-  return division_time;
-}
-
-function overlayUpdate(){
-  //headerUpdate();
-  var maxrow = 4;
-  var disprow = maxrow ;
-  var template = $('#source li');
-  var container = $('#overlay').clone();
-  container.html('');
-  //Reset
-  if(Overlay_Main_Data.length < maxrow){
-    disprow = Overlay_Main_Data.length;
-  }
-  //                  0           1          2     3     4         5           6           7           8     9    10
-  // push_data = [left_name,left_server,alliance,'job','skill',right_name,right_server,allilance,'job','skill',Battle_Current_Time];
-  for(let i = Overlay_Main_Data.length - disprow ; i < Overlay_Main_Data.length ; i++){
-    let display_arrived = Battle_Current_Time - Overlay_Main_Data[i][10];
-    if(display_arrived <= Disappearance){
-      var row = template.clone();
-      if(display_arrived == Disappearance){
-        console.log('fadeout_start');
-        row.find('.main-data').addClass('fadeout');
-      }
-      if(Overlay_Main_Data[i][0] == MyCharactor_Name){
-        row.find('.left-space').addClass('me');
-      }
-      else{
-        row.find('.left-space').addClass('aliance' + Overlay_Main_Data[i][2]);
-      }
-      row.find('.left-jobicon').addClass('icon-' + Overlay_Main_Data[i][3]);
-      row.find('.left-name').text(Overlay_Main_Data[i][0]);
-      row.find('.arrow').addClass('icon-NaviArrowRight');
-      if(Overlay_Main_Data[i][2] == 0 && Overlay_Main_Data[i][7] !== 0){
-        row.find('.arrow').addClass('arrow-death');
-      }
-      else if(Overlay_Main_Data[i][2] == 0 && Overlay_Main_Data[i][7] == 0){
-        row.find('.arrow').addClass('arrow-other');
-      }
-      else if(Overlay_Main_Data[i][2] !== 0 && Overlay_Main_Data[i][7] == 0){
-        row.find('.arrow').addClass('arrow-kill');
-      }
-      if(Overlay_Main_Data[i][5] == MyCharactor_Name){
-        row.find('.right-space').addClass('me');
-      }
-      else{
-        row.find('.right-space').addClass('aliance' + Overlay_Main_Data[i][7]);
-      }
-      row.find('.right-jobicon').addClass('icon-' + Overlay_Main_Data[i][8]);
-      row.find('.right-name').text(Overlay_Main_Data[i][5]);
-      container.append(row);
-      }
-      else{
-        //console.log('20s Over');
-      }
-    }
-  $('#overlay').replaceWith(container);
 }
