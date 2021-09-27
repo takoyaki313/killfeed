@@ -8,11 +8,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+JP:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/icon.css">
+    <link rel="stylesheet" href="css/killfeed.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="https://ngld.github.io/OverlayPlugin/assets/shared/common.min.js"></script>
     <script type="text/javascript" src="js/Main.js"></script>
     <script type="text/javascript" src="js/Action.js"></script>
     <script type="text/javascript" src="js/Server.js"></script>
+    <script type="text/javascript" src="js/Timer.js"></script>
+    <script type="text/javascript" src="js/Job.js"></script>
+    <script type="text/javascript" src="js/Overlay_Update.js"></script>
+    <script type="text/javascript" src="js/Setting.js"></script>
 </head>
 
 <body>
@@ -50,7 +55,7 @@
     </span>
     <span class='setting'>
       <label for='button-4' class='icon-app_drawer_setting'></label>
-      <button class='button-1' id='button-1'></button>
+      <button class='button-4' id='button-4'></button>
     </span>
   </div>
   <hr class='header-line' size='4px' noshade>
@@ -63,6 +68,120 @@
       </span>
       <span class='all-kd-percent'></span>
     </span>
+  </div>
+</div>
+<div class='set-data'>
+  <div class="set-header">
+    <span class='set-header-text'>　Setting</span>
+    <label for='button-5' class='icon-NaviUp'></label>
+    <button class='button-5' id='button-5'></button>
+  </div>
+  <div class="set-space">
+    <div>
+      <input type='checkbox' id='setting-item-1' class="checkbox" />
+      <label class="switch" for='setting-item-1'></label>
+      <label class="text" for='setting-item-1'>キルログの表示</label>
+    </div>
+    <div class="explain">ヘッダーのみで使用する/キルログを分割して別に表示している場合はオフ</div>
+  </div>
+  <div class="set-space">
+    <div>
+      <label for='setting-item-1-2'>キルログの表示位置</label>
+      <div>
+        <input type='radio' id='killrog-left' name='killrog-position' value='left'><label for='killrog-left'>Left</label>
+        <input type='radio' id='killrog-center' name='killrog-position' value='center'><label for='killrog-center'>Center</label>
+        <input type='radio' id='killrog-right' name='killrog-position' value='right'><label for='killrog-right'>Right</label>
+      </div>
+    </div>
+    <div class="explain">キルログの寄せ位置を指定する。デフォルトは右揃え</div>
+  </div>
+  <div class="set-space">
+    <div>
+      <input type='checkbox' id='setting-item-2-1' class="checkbox" />
+      <label class="switch" for='setting-item-2-1'></label>
+      <label class="text" for='setting-item-2-1'>ヘッダーの表示</label>
+    </div>
+    <div class="explain">ヘッダーが要らない場合はオフ。起動後エリア変更すると消える</div>
+  </div>
+  <div class="set-space">
+    <div>
+      <input type='checkbox' id='setting-item-2-2' class="checkbox" />
+      <label class="switch" for='setting-item-2-2'></label>
+      <label class="text" for='setting-item-2-2'>PvEエリアでのヘッダーの表示</label>
+    </div>
+    <div class="explain">起動後エリア変更すると消える。<br>PvPエリアからPvEエリアに入ると表示する。</div>
+  </div>
+    <!--
+  <div class="set-space">
+    <div>
+      <input type='checkbox' id='setting-item-3' class="checkbox" />
+      <label class="switch" for='setting-item-3'></label>
+      <label class="text" for='setting-item-3'>キルログに表示するデータ</label>
+    </div>
+    <div class="explain">未実装</div>
+  </div>
+-->
+  <div class="set-space">
+    <div>
+      <input type='checkbox' id='setting-item-10' class="checkbox" />
+      <label class="switch" for='setting-item-10'></label>
+      <label class="text" for='setting-item-10'>分割オーバーレイを使用する</label>
+    </div>
+    <div class="explain">キルログを分割して別オーバーレイとして表示するかどうか。反映にはリロードが必要</div>
+  </div>
+  <div class="set-space">
+    <div>
+      <label class="text" for='setting-item-4'>最大表示行数</label>
+      <input type='number' id='setting-item-4' class="number" min="1" max="100"/>
+    </div>
+    <div class="explain">キルログの最大表示行数を設定する。</div>
+  </div>
+  <div class="set-space">
+    <div>
+      <input type='checkbox' id='setting-item-5' class="checkbox" />
+      <label class="switch" for='setting-item-5'></label>
+      <label class="text" for='setting-item-5'>アニメーションの表示</label>
+    </div>
+    <div class="explain">キルログがゆっくり消えるかどうか。点滅してしまうときはオフに。</div>
+  </div>
+  <div class="set-space">
+    <div>
+      <label class="text" for='setting-item-6'>キルログの表示時間</label>
+      <input type='number' id='setting-item-6' class="number" min='1' max='60'/>
+    </div>
+    <div class="explain">キルログが表示されてから消えるまでを設定する。推奨は30秒</div>
+  </div>
+  <div class="set-space">
+    <div>
+      <label class="text" for='setting-item-7'>FLのタイマーオフセット</label>
+      <input type='number' id='setting-item-7' class="number"/>
+    </div>
+    <div class="explain">デフォルトでは、フロントライン参加後に表示される
+      <br>「フロントラインにxx団として参加しました！」から<br>43000ms後(45秒-2秒)からタイマーが作動するようになっています。</div>
+  </div>
+  <div class="set-space">
+    <div>
+      <input type='button' id='setting-item-8-2' class="checkbox"/>
+      <label class="icon-ViewMove" for='setting-item-8-2'></label>
+      <label class="text" for='setting-item-8-2'>ダミーデータを読み込み（最大10行）</label>
+    </div>
+  </div>
+  <!--
+  <div class="set-space">
+    <div>
+      <input type='button' id='setting-item-8' class="checkbox"/>
+      <label class="icon-ViewMove" for='setting-item-8'></label>
+      <label class="text" for='setting-item-8'>色設定</label>
+    </div>
+  </div>
+-->
+  <div class="set-space">
+    <div>
+      <input type='button' id='setting-item-9' class="checkbox"/>
+      <label class="icon-ViewMove" for='setting-item-9'></label>
+      <label class="text" for='setting-item-9'>初期化</label>
+      <span class='version'>kill-feed-core 1.02</span>
+    </div>
   </div>
 </div>
 <ol id="overlay">
