@@ -76,3 +76,39 @@ function mana_Server(name){
     return 'none';
   }
 }
+function elemental_Server(name){
+  const cutname = name.slice(name.indexOf(' ') + 1 ,name.length);
+  if(cutname.indexOf('Aegis') !== -1){
+    return 'Aegis';
+  }
+  else if(cutname.indexOf('Atomos') !== -1){
+    return 'Atomos';
+  }
+  else if(cutname.indexOf('Carbuncle') !== -1){
+    return 'Carbuncle';
+  }
+  else if(cutname.indexOf('Garuda') !== -1){
+    return 'Garuda';
+  }
+  else if(cutname.indexOf('Gungnir') !== -1){
+    return 'Gungnir';
+  }
+  else if(cutname.indexOf('Kujata') !== -1){
+    return 'Kujata';
+  }
+  else if(cutname.indexOf('Ramuh') !== -1){
+    return 'Ramuh';
+  }
+  else if(cutname.indexOf('Tonberry') !== -1){
+    return 'Tonberry';
+  }
+  else if(cutname.indexOf('Typhon') !== -1){
+    return 'Typhon';
+  }
+  else if(cutname.indexOf('Unicorn') !== -1){
+    return 'Unicorn';
+  }
+  else {
+    return 'none';
+  }
+}

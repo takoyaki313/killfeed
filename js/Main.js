@@ -76,6 +76,10 @@ function cut_server(oldname){
       Datacenter = 'MANA';
     }
     if (server == 'none'){
+      server = elemental_Server(oldname);
+      Datacenter = 'ELEMENTAL';
+    }
+    if (server == 'none'){
       /*
       let server = elemental_Server(oldname);
       Datacenter = 'ELEMENTAL';
@@ -88,10 +92,12 @@ function cut_server(oldname){
   }
   else if (Datacenter == 'GAIA'){
     server = gaia_Server(oldname);
-    console.log('syouryaku');
   }
   else if (Datacenter == 'MANA') {
     server = mana_Server(oldname);
+  }
+  else if (Datacenter == 'ELEMENTAL') {
+    server = elemental_Server(oldname);
   }
   //console.log(server.length);
   let name ='';
