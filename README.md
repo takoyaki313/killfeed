@@ -60,3 +60,4 @@ https://takoyaki313.github.io/killfeed/main.html
 
 ## 既知のバグ
 - 途中参加するとタイマーがスタートしないときがある。
+- 味方が死にまくって試合に負けてしまう。
