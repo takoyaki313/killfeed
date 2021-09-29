@@ -8,8 +8,10 @@ FPSゲームでよくあるキルログを表示するオーバーレイ
 
 ## インストール
 Overlayを追加し、CustomからMiniParceを選択し、表示するURLに以下をコピペしてください。
-`https://takoyaki313.github.io/killfeed/main.html`
 
+```
+https://takoyaki313.github.io/killfeed/main.html
+```
 
 ## 前提Plugin
 [ngld/OverlayPlugin](https://github.com/ngld/OverlayPlugin)
@@ -58,3 +60,4 @@ Overlayを追加し、CustomからMiniParceを選択し、表示するURLに以�
 
 ## 既知のバグ
 - 途中参加するとタイマーがスタートしないときがある。
+- 味方が死にまくって試合に負けてしまう。
