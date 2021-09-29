@@ -34,6 +34,10 @@ $(document).on("click", "#setting-item-9", function(){
   });//click button-5 end (setting-button-close)
 $(document).on("click", "#setting-item-8-2", function(){
   dammy_Data();
+  if(Local_send_data == true){
+    bc_time.postMessage(Battle_Current_Time);
+    bc_kill.postMessage(Overlay_Main_Data);
+  }
   });//click button-5 end (setting-button-close)
 function local_create(){
   localStorage.setItem('killrog','true');
