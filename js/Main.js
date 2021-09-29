@@ -285,7 +285,11 @@ $(function() {
       log_Listen_Mode = 1;
       headerUpdate();
     }
-    else if(Area.zoneName.indexOf('Bourderland Ruins')!== -1
+    //zoneID: 376
+    //zoneName: "the Borderland Ruins (Secure)"
+
+
+    else if(Area.zoneID == 376
     ||Area.zoneName.indexOf('Seal Rock')!== -1
     ||Area.zoneName.indexOf('Fields of Glory')!== -1
     ||Area.zoneName.indexOf('Onsal Hakair')!== -1){
