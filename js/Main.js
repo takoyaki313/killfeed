@@ -87,7 +87,7 @@ function cut_server(oldname){
     }
     if (server == 'none'){//サーバが特定できなかった場合
       Datacenter = 'none';
-      console.warn('Serverみつからんかったわ！');
+      //console.warn('Serverみつからんかったわ！');
     }
   }
   else if (Datacenter == 'GAIA'){
@@ -142,6 +142,27 @@ function deathPlayerCheck(log){
       }//logline 0
 
     }//logline length6
+}
+function fallDeath(log){
+  if(log.line.length == 6){
+    if(log.line[0] == '00'){
+      if(log.line[2] !== '0'){
+        if(log.line[4].indexOf('は、力尽きた。') !== -1){
+          let player = log.line[4].substring(0,log.line[4].indexOf('は、'));
+          let player_cut = cut_server(player);
+          let how = 'kill';
+          for(let l = 0 ; l < Aliance_Member.length ; l++){
+            if(player_cut[0] == Aliance_Member[l][0]){
+              l = 200;
+              how = 'death'
+            }
+          }
+          if_kill_or_death(player_cut[0],player_cut[1],player_cut[0],player_cut[1],how);
+        }
+
+      }
+    }
+  }
 }
 function dammy_Data(){
   //                          0            1      2   3    4         5                    6    7  8      9     10  11
@@ -270,7 +291,8 @@ $(function() {
         alliance_data_marge();
       }
       console.log(Aliance_Member);
-      for (var n = 0; n < 9; n++) {
+      /*
+      for (var n = 0; n < 8 && p.party.length > 8; n++) {
         if(p.party[n].inParty){
           Party_Member[n] = p.party[n].name;
         }
@@ -278,6 +300,7 @@ $(function() {
       }
         console.log('inParty');
         console.log(Party_Member);
+        */
     }
   });
 
@@ -293,11 +316,12 @@ $(function() {
     }
     //zoneID: 376
     //zoneName: "the Borderland Ruins (Secure)"
-
+    //zoneID: 554
+    //zoneName: "the Fields of Glory (Shatter)"
 
     else if(Area.zoneID == 376
     ||Area.zoneName.indexOf('Seal Rock')!== -1
-    ||Area.zoneName.indexOf('Fields of Glory')!== -1
+    ||Area.zoneID == 554
     ||Area.zoneName.indexOf('Onsal Hakair')!== -1){
       Set_Battle_Time = 1200;
       Battle_Current_Time = 0;
@@ -364,6 +388,7 @@ $(function() {
       }
       killPlayerCheck(log);
       deathPlayerCheck(log);
+      fallDeath(log);
     }
 
 
@@ -435,8 +460,6 @@ function maindata_marge(left_name,left_server,right_name,right_server,how){
 function headerUpdate(){
   var header = $(header_space);
   //header top start
-  console.log(Area_Change_num);
-  console.log(Local_PvEHeader);
   if(Area_Change_num == 0 ){
     header.css('display','flex');
   }

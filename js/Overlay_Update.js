@@ -50,6 +50,14 @@ function overlayUpdate(){
         else if(Overlay_Main_Data[i][2] !== 0 && Overlay_Main_Data[i][7] == 0){
           row.find('.arrow').addClass('arrow-kill');
         }
+        else if(Overlay_Main_Data[i][0] == Overlay_Main_Data[i][5]){//力尽きた
+          if (Overlay_Main_Data[i][2] == 0 ){
+            row.find('.arrow').addClass('arrow-kill');
+          }
+          else {
+            row.find('.arrow').addClass('arrow-death');
+          }
+        }
         if(Overlay_Main_Data[i][5] == MyCharactor_Name){
           row.find('.right-space').addClass('me');
         }
