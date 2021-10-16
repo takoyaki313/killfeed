@@ -53,7 +53,7 @@ function killPlayerCheck(log){
             //audio.play();
             let ally = log.line[4].substring(0,log.line[4].indexOf('は、'));
             var enemy = log.line[4].substring(log.line[4].indexOf('は、') + 2,log.line[4].indexOf('を倒した'));
-            console.log('kill' + ally +'→'+ enemy);
+            //console.log('kill' + ally +'→'+ enemy);
             let ally_cut = cut_server(ally);
             let enemy_cut = cut_server(enemy);
             if_kill_or_death(ally_cut[0],ally_cut[1],enemy_cut[0],enemy_cut[1],'kill');
@@ -111,7 +111,55 @@ function cut_server(oldname){
   //console.log(data);
   return data;
 }
-
+function killing_log_check(log){
+  //0: "25"
+  //1: "2021-10-04T00:11:17.7930000+09:00"
+  //2: "101F7376"  //Victim
+  //3: "Erector Nachume"
+  //4: "1031BE34"  //Attacker
+  //5: "Giro Krok"
+  //6: ""
+  //7: "996e939dd722275d6f6dac8991c1e866"
+  let killing_data = ['Attacker','AttackerID','Victim','VictimID',true,'kill']
+  if (log.line[0] === '25'){
+    //Attacker
+    killing_data[1] =log.line[4];
+    if(log.line[3] === ''){
+      killing_data[0] = log.line[4];
+    }
+    else {
+      killing_data[0] = log.line[5];
+    }
+    //Victim
+    killing_data[3] =log.line[2];
+    if(log.line[3] === ''){
+      killing_data[2] = log.line[2];
+    }
+    else {
+      killing_data[2] = log.line[3];
+    }
+    //NPC類の除外処理
+    const exclusion_enemy = ['マグス','バイキング','マーシナリ','タンク','アイスドトームリス','邀撃'];
+    for(let p =  0 ; p < exclusion_enemy.length ; p++) {
+      if (killing_data[2].indexOf(exclusion_enemy[p]) !== -1 ){
+        killing_data[4] = false;
+        //console.log(log);
+        break;
+      }
+    }
+    //キルなのかデスなのかを判定
+    for(let l = 0 ; l < Aliance_Member.length ; l++){
+      if(killing_data[2] == Aliance_Member[l][0]){
+        killing_data[5] = 'death';
+        break;
+      }
+    }
+    //NPCキルじゃない場合は処理を入れる
+    if(killing_data[4]) {
+      if_kill_or_death(killing_data[0],killing_data[1],killing_data[2],killing_data[3],killing_data[5]);
+    }
+  }
+}
 function deathPlayerCheck(log){
   if(log.line.length == 6){
     //console.warn(log);
@@ -132,7 +180,7 @@ function deathPlayerCheck(log){
             //KillSound.play();
             let ally = log.line[4].substring(0,log.line[4].indexOf('は、'));
             let enemy = log.line[4].substring(log.line[4].indexOf('は、') + 2 ,log.line[4].indexOf('に倒された'));
-            console.log('death' + ally +'←'+ enemy);
+            //console.log('death' + ally +'←'+ enemy);
             let ally_cut = cut_server(ally);
             let enemy_cut = cut_server(enemy);
             if_kill_or_death(ally_cut[0],ally_cut[1],enemy_cut[0],enemy_cut[1],'death');
@@ -200,8 +248,8 @@ function alliance_data_marge(){
       }
     }
   }
-  console.log('PartyChangedによるマージ');
-  console.log(All_Member_Jobs);
+  //console.log('PartyChangedによるマージ');
+  //console.log(All_Member_Jobs);
 }
 function array_reset(){
   Party_Member = [];
@@ -211,7 +259,7 @@ function array_reset(){
   Battle_start = false;
   BattleTime = 0;
   //Overlay_Main_Data = [];
-  console.log('dataclear');
+  //console.log('dataclear');
 }
 function fl_alliance(){
   for(var i = 0; i < 24 ; i++){
@@ -260,7 +308,7 @@ $(function() {
   });
 
   addOverlayListener('PartyChanged', (p) => {
-    console.log(p);
+    //console.log(p);
     if(p.party.length > 4){//パーティメンバーを関数に入れる
       Party_Member = [];
       if(p.party.length == 24){
@@ -290,7 +338,7 @@ $(function() {
         }
         alliance_data_marge();
       }
-      console.log(Aliance_Member);
+      //console.log(Aliance_Member);
       /*
       for (var n = 0; n < 8 && p.party.length > 8; n++) {
         if(p.party[n].inParty){
@@ -305,7 +353,7 @@ $(function() {
   });
 
   addOverlayListener("ChangeZone",(Area) => {
-    console.log(Area);
+  //  console.log(Area);
     Area_Name = Area.zoneName;
     if(Area.zoneName == 'Hidden Gorge'){
       Set_Battle_Time = 900;
@@ -349,7 +397,7 @@ $(function() {
       tensyon_max = 0;
       array_reset();
     }
-    console.log('Log listen Mode = ' + log_Listen_Mode);
+    //console.log('Log listen Mode = ' + log_Listen_Mode);
   });
 
   addOverlayListener("LogLine", (log) => {
@@ -389,6 +437,7 @@ $(function() {
       killPlayerCheck(log);
       deathPlayerCheck(log);
       fallDeath(log);
+      //killing_log_check(log);
     }
 
 
@@ -453,9 +502,7 @@ function maindata_marge(left_name,left_server,right_name,right_server,how){
       z = 200;
     }
   }
-  console.log(push_data);
   Overlay_Main_Data.push(push_data);
-  console.log(Overlay_Main_Data);
 }
 function headerUpdate(){
   var header = $(header_space);
